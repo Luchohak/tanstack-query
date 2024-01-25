@@ -9,6 +9,10 @@ export default function NewEventsSection() {
     //used to point at the data received by the query so that it can be reused in the future
     queryKey: ["events"],
     queryFn: fetchEvents,
+    //controls when to fire the request when coming back to the component
+    staleTime: 5000,
+    //Time that cached data will be kept around  
+    //gcTime: 30000
   });
 
   let content;
