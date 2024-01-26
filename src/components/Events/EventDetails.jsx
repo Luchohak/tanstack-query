@@ -12,7 +12,7 @@ export default function EventDetails() {
   const params = useParams();
   const eventId = params.id;
   const navigate = useNavigate();
-  let formattedDate = '';
+  let formattedDate = "";
 
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["event-detail", { eventId }],
@@ -22,7 +22,10 @@ export default function EventDetails() {
   const { mutate } = useMutation({
     mutationFn: deleteEvent,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["events"] });
+      queryClient.invalidateQueries({
+        queryKey: ["events"],
+        refetchType: "none",
+      });
       navigate("/events");
     },
   });
@@ -65,7 +68,9 @@ export default function EventDetails() {
             <div id="event-details-info">
               <div>
                 <p id="event-details-location">{data.location}</p>
-                <time dateTime={`Todo-DateT$Todo-Time`}>{formattedDate ? formattedDate : data.date}</time>
+                <time dateTime={`Todo-DateT$Todo-Time`}>
+                  {formattedDate ? formattedDate : data.date}
+                </time>
               </div>
               <p id="event-details-description">{data.description}</p>
             </div>
