@@ -7,11 +7,11 @@ import { fetchEvents } from "../../util/http.js";
 export default function NewEventsSection() {
   const { data, isPending, isError, error } = useQuery({
     //used to point at the data received by the query so that it can be reused in the future
-    queryKey: ["events"],
-    queryFn: fetchEvents,
+    queryKey: ["events", { max: 3 }],
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
     //controls when to fire the request when coming back to the component
     staleTime: 5000,
-    //Time that cached data will be kept around  
+    //Time that cached data will be kept around
     //gcTime: 30000
   });
 
